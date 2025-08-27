@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::crete('posts',function(Blueprint $table){
+        Schema::create('posts',function(Blueprint $table){
             $table->id();
             $table->string('title');
             $table->string('description');
             $table->string('img',100);
             $table->string('content');
-            $table->interger('likes');
+            $table->integer('likes');
 
-            $table->interger('user_id');
-            $table->timestapms();
+            $table->integer('user_id');
+            $table->timestamps();
         });
     }
 
