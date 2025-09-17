@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 //ENDPOINT
 Route::get('/', function () {
     return view('welcome');
@@ -18,8 +19,6 @@ Route::group(['prefix'=>'dashboard'],function(){
     Route::get("/", function(){
         return view('admin.dashboard');
     });
-    Route::get("/users", function(){
-        return view('admin.users');
-    });
+    Route::get("/users",[UsersController::class,'getUsers']);
 });
 
