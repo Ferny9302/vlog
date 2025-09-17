@@ -14,6 +14,12 @@ Route::get("/post", function(){
 Route::get("/about", function(){
     return view('about');
 });
-Route::get("/dashboard", function(){
-    return view('admin.dashboard');
+Route::group(['prefix'=>'dashboard'],function(){
+    Route::get("/", function(){
+        return view('admin.dashboard');
+    });
+    Route::get("/users", function(){
+        return view('admin.users');
+    });
 });
+
