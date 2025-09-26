@@ -15,5 +15,11 @@ class UsersController extends Controller
             ->with('usuarios',$data);
 
     }
+    public function createUsers(){
+        dd("Si jalo");
+    }
+
+
+    
 
 }
