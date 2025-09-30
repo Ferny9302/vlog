@@ -11,7 +11,20 @@
             </button>
         </div>
     </div>
-        
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     
     <div class="p-4">
     <table class="table">
@@ -36,8 +49,10 @@
             <td>{{ $item->email }}</td>
             <td>***********</td>
             <td>
-                <button class="btn btn-danger">
-                    X
+                <button class="btn btn-danger btnEliminar" 
+                data-id="{{ $item->id }}"    
+                data-toggle="modal" data-target="#modalDelete">
+                    <i class="fa fa-trash"></i>
                 </button>
 
             </td>
@@ -65,29 +80,54 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                        <input value="{{ old('name') }}" name="name" type="text" class="form-control" id="name" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="nickname">Nickname</label>
-                        <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp">
+                        <input value="{{ old('nickname') }}" name="nickname" type="text" class="form-control" id="nickname" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input value="{{ old('email') }}" name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="pass">Password</label>
-                        <input type="password" class="form-control" id="pass" aria-describedby="emailHelp">
+                        <input name="pass" type="password" class="form-control" id="pass" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="pass1">Confirmar Password</label>
-                        <input type="password" class="form-control" id="pass1" aria-describedby="emailHelp">
+                        <input name="pass2" type="password" class="form-control" id="pass1" aria-describedby="emailHelp">
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+ <!-- Modal delete -->
+ <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/dashboard/users" method="POST">
+                @csrf
+                <div class="modal-body">
+                   <h2>¿Deseas eliminar el registro?</h2>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
                 </div>
 
             </form>
@@ -101,5 +141,12 @@
 @section('scripts')
     <Script>
         //alert("Hola mundo")
+        $(document).ready(function(){
+            $(".btnEliminar").on('click', function(event){
+                var id=$(this).data('id');
+                alert(id)
+                
+            });
+        });
     </Script>
 @endsection
